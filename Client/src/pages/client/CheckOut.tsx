@@ -104,7 +104,8 @@ const CheckOut = () => {
                 (sum, item) => sum + item.product.price * item.quantity,
                 0
               )
-              .toFixed(2)} VNĐ
+              .toFixed(2)}{" "}
+            VNĐ
           </TotalAmount>
         </TotalContainer>
       </CartSection>
@@ -214,7 +215,7 @@ const TotalLabel = styled("p")({
 const TotalAmount = styled("p")({
   fontSize: "1.25rem",
   fontWeight: 600,
-  color: 'red'
+  color: "red",
 });
 
 export default CheckOut;

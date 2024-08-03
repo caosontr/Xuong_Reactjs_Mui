@@ -8,6 +8,99 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>();
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: LoginForm) => {
+    try {
+      const res = await axios.post("http://localhost:3000/auth/login", data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Đăng nhập thành công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log(res);
+      navigate("/");
+      const accessToken = res.data.accessToken;
+      localStorage.setItem("access-token", accessToken);
+      localStorage.setItem("userId", res.data.userInfo.userId);
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Đã xảy ra lỗi!",
+        text: "Vui lòng kiểm tra lại Email và Password",
+      });
+      console.error(err);
+    }
+  };
+
+  return (
+    <LoginSpace>
+      <LoginContainer>
+        <BtnBack onClick={() => navigate("/")}>
+          <BackIcon>
+            <CloseSharpIcon />
+          </BackIcon>
+        </BtnBack>
+
+        <FormLogin onSubmit={handleSubmit(onSubmit)}>
+          <FormTitle>Login</FormTitle>
+          <FormLabel htmlFor="email">Email:</FormLabel>
+          <FormInput
+            id="email"
+            type="email"
+            variant="outlined"
+            placeholder="Nhập email của bạn"
+            {...register("email", {
+              required: "* Vui lòng nhập email",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                message: "* Vui lòng nhập email hợp lệ",
+              },
+            })}
+          />
+          {errors.email && <FieldErr>{errors.email.message}</FieldErr>}
+
+          <FormLabel htmlFor="password">Password:</FormLabel>
+          <FormInput
+            id="password"
+            type="password"
+            variant="outlined"
+            placeholder="Nhập mật khẩu của bạn"
+            {...register("password", {
+              required: "* Vui lòng nhập mật khẩu",
+              minLength: {
+                value: 6,
+                message: "* Mật khẩu phải có ít nhất 6 ký tự",
+              },
+            })}
+          />
+          {errors.password && <FieldErr>{errors.password.message}</FieldErr>}
+
+          <BtnSubmit>
+            <SubmitButton type="submit">Login</SubmitButton>
+          </BtnSubmit>
+        </FormLogin>
+
+        <RegisterLink>
+          Chưa có tài khoản?{" "}
+          <a onClick={() => navigate("/register")}>Đăng ký</a>
+        </RegisterLink>
+      </LoginContainer>
+    </LoginSpace>
+  );
+};
+
+export default Login;
+
 const LoginSpace = styled("div")({
   display: "flex",
   justifyContent: "center",
@@ -114,95 +207,3 @@ const RegisterLink = styled("div")({
     cursor: "pointer",
   },
 });
-
-const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginForm>();
-
-  const navigate = useNavigate();
-
-  const onSubmit = async (data: LoginForm) => {
-    try {
-      const res = await axios.post("http://localhost:3000/auth/login", data);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Đăng nhập thành công",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      console.log(res);
-      navigate("/");
-      localStorage.setItem("access-token", res.data.accessToken);
-      localStorage.setItem("userId", res.data.userInfo.userId);
-    } catch (err) {
-      Swal.fire({
-        icon: "error",
-        title: "Đã xảy ra lỗi!",
-        text: "Vui lòng kiểm tra lại Email và Password",
-      });
-      console.error(err);
-    }
-  };
-
-  return (
-    <LoginSpace>
-      <LoginContainer>
-        <BtnBack onClick={() => navigate("/")}>
-          <BackIcon>
-            <CloseSharpIcon />
-          </BackIcon>
-        </BtnBack>
-
-        <FormLogin onSubmit={handleSubmit(onSubmit)}>
-          <FormTitle>Login</FormTitle>
-          <FormLabel htmlFor="email">Email:</FormLabel>
-          <FormInput
-            id="email"
-            type="email"
-            variant="outlined"
-            placeholder="Nhập email của bạn"
-            {...register("email", {
-              required: "* Vui lòng nhập email",
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "* Vui lòng nhập email hợp lệ",
-              },
-            })}
-          />
-          {errors.email && <FieldErr>{errors.email.message}</FieldErr>}
-
-          <FormLabel htmlFor="password">Password:</FormLabel>
-          <FormInput
-            id="password"
-            type="password"
-            variant="outlined"
-            placeholder="Nhập mật khẩu của bạn"
-            {...register("password", {
-              required: "* Vui lòng nhập mật khẩu",
-              minLength: {
-                value: 6,
-                message: "* Mật khẩu phải có ít nhất 6 ký tự",
-              },
-            })}
-          />
-          {errors.password && <FieldErr>{errors.password.message}</FieldErr>}
-
-          <BtnSubmit>
-            <SubmitButton type="submit">Login</SubmitButton>
-          </BtnSubmit>
-        </FormLogin>
-
-        <RegisterLink>
-          Chưa có tài khoản?{" "}
-          <a onClick={() => navigate("/register")}>Đăng ký</a>
-        </RegisterLink>
-      </LoginContainer>
-    </LoginSpace>
-  );
-};
-
-export default Login;

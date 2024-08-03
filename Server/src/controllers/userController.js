@@ -4,6 +4,15 @@ import User from "../models/userModel.js";
 import { registerSchema, loginSchema } from "../validations/user.js";
 
 class UserController {
+  async getUser(req, res) {
+    try {
+      const users = await User.find();
+      res.json(users);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
   async registerUser(req, res) {
     try {
       const { username, email, password } = req.body;

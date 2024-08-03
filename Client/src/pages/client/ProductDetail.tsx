@@ -3,10 +3,6 @@ import Typography from "@mui/material/Typography";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ApiResProDetail, Product } from "../../types/Product";
@@ -126,45 +122,23 @@ const ProductDetail = () => {
           </DetailImgContainer>
           <DetailInfoContainer>
             <DetailName>{data?.title}</DetailName>
-            <DetailPrice>{data?.price}$</DetailPrice>
-            <RatingContainer>
-              <StarRoundedIcon />
-              <StarRoundedIcon />
-              <StarRoundedIcon />
-              <StarRoundedIcon />
-              <StarRoundedIcon /> |
-              <Typography variant="body1">5 Customer Reviews</Typography>
-            </RatingContainer>
+            <DetailPrice>{data?.price}VNĐ</DetailPrice>
+
             <DetailIntro>{data?.description}</DetailIntro>
-            <SizeTitle>Size</SizeTitle>
-            <SizeList>
-              <SizeItem>L</SizeItem>
-              <SizeItem>XL</SizeItem>
-              <SizeItem>XS</SizeItem>
-            </SizeList>
-            <ColorTitle>Color</ColorTitle>
-            <ColorList>
-              <ColorItem style={{ backgroundColor: "#fff" }} />
-              <ColorItem style={{ backgroundColor: "#000" }} />
-              <ColorItem style={{ backgroundColor: "#aaa" }} />
-            </ColorList>
-            <DetailItemContainer>
-              <DetailQuantity>
-                <QuantityIcon onClick={() => handleQuantityChange(-1)}>
-                  <RemoveCircleIcon />
-                </QuantityIcon>
-                {quantity}
-                <QuantityIcon onClick={() => handleQuantityChange(1)}>
-                  <AddCircleIcon />
-                </QuantityIcon>
-              </DetailQuantity>
-              <DetailAction onClick={handleAddToCart}>
-                <DetailActionText>Add to Cart</DetailActionText>
-              </DetailAction>
-              <DetailAction>
-                <DetailActionText>Compare</DetailActionText>
-              </DetailAction>
-            </DetailItemContainer>
+
+            <DetailQuantity>
+              <QuantityIcon onClick={() => handleQuantityChange(-1)}>
+                <RemoveCircleIcon />
+              </QuantityIcon>
+              {quantity}
+              <QuantityIcon onClick={() => handleQuantityChange(1)}>
+                <AddCircleIcon />
+              </QuantityIcon>
+            </DetailQuantity>
+            <DetailAction onClick={handleAddToCart}>
+              <DetailActionText>Add to Cart</DetailActionText>
+            </DetailAction>
+
             <CategoryTagsContainer>
               <CategoryTagsList>
                 <CategoryTagsGroup>
@@ -172,18 +146,6 @@ const ProductDetail = () => {
                   <Typography variant="body1">Category</Typography>
                   <Typography variant="body1">Tags</Typography>
                   <Typography variant="body1">Share</Typography>
-                </CategoryTagsGroup>
-                <CategoryTagsGroup>
-                  <Typography variant="body1">: SS001</Typography>
-                  <Typography variant="body1">: </Typography>
-                  <Typography variant="body1">
-                    : Sofa, Chair, Home, Shop
-                  </Typography>
-                  <div>
-                    <FacebookIcon />
-                    <LinkedInIcon />
-                    <TwitterIcon />
-                  </div>
                 </CategoryTagsGroup>
               </CategoryTagsList>
             </CategoryTagsContainer>
@@ -283,13 +245,7 @@ const DetailName = styled("h2")({
 const DetailPrice = styled("span")({
   fontSize: "18px",
   fontWeight: "600",
-  color: "#333",
-});
-
-const RatingContainer = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  gap: "5px",
+  color: "red",
 });
 
 const DetailIntro = styled("p")({
@@ -297,49 +253,6 @@ const DetailIntro = styled("p")({
   lineHeight: "1.5",
   marginTop: "10px",
   color: "#333",
-});
-
-const SizeTitle = styled("h3")({
-  fontSize: "18px",
-  fontWeight: "600",
-  color: "#333",
-});
-
-const SizeList = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
-
-const SizeItem = styled("span")({
-  backgroundColor: "#f0f0f0",
-  padding: "10px",
-  borderRadius: "5px",
-  color: "#333",
-});
-
-const ColorTitle = styled("h3")({
-  fontSize: "18px",
-  fontWeight: "600",
-  marginTop: "20px",
-  color: "#333",
-});
-
-const ColorList = styled("div")({
-  display: "flex",
-  gap: "10px",
-});
-
-const ColorItem = styled("div")({
-  width: "30px",
-  height: "30px",
-  borderRadius: "50%",
-});
-
-const DetailItemContainer = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  gap: "20px",
-  marginTop: "20px",
 });
 
 const DetailQuantity = styled("div")({

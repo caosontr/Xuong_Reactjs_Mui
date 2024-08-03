@@ -8,12 +8,8 @@ import {
   Card,
   CardMedia,
   CardContent,
-  IconButton,
   Chip,
 } from "@mui/material";
-import ShareIcon from "@mui/icons-material/Share";
-import CompareIcon from "@mui/icons-material/Compare";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { ApiResPro, Product } from "../types/Product";
 import axios from "axios";
 import { BASE_URL } from "../config";
@@ -64,18 +60,6 @@ const ProductList = () => {
                     <Link to={`/product/${product._id}`}>
                       <AddToCartButton>View Detail</AddToCartButton>
                     </Link>
-                    <AddToCartButton>Add to Cart</AddToCartButton>
-                    <AdditionalOptions>
-                      <IconButton color="inherit">
-                        <ShareIcon />
-                      </IconButton>
-                      <IconButton color="inherit">
-                        <CompareIcon />
-                      </IconButton>
-                      <IconButton color="inherit">
-                        <FavoriteIcon />
-                      </IconButton>
-                    </AdditionalOptions>
                   </OverlayContent>
                 </Overlay>
                 <DiscountTag label="" />
@@ -191,7 +175,6 @@ const OverlayContent = styled(Box)({
 
 const AddToCartButton = styled("div")({
   backgroundColor: "#fff",
-  color: "#b88e2f",
   fontSize: "1rem",
   fontWeight: 600,
   padding: "10px 20px",
@@ -200,13 +183,6 @@ const AddToCartButton = styled("div")({
   width: 200,
   marginBottom: "1rem",
   textAlign: "center",
-});
-
-const AdditionalOptions = styled(Box)({
-  marginTop: "20px",
-  display: "flex",
-  gap: "1rem",
-  justifyContent: "center",
 });
 
 const DiscountTag = styled(Chip)({

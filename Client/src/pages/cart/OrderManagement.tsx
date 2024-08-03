@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import { BASE_URL } from "../../config";
 import { Order } from "../../types/Order";
+import { IconButton } from "@mui/material";
 
 const OrderManagement = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -23,10 +23,6 @@ const OrderManagement = () => {
     };
     fetchOrders();
   }, []);
-
-  const handleViewOrder = (orderId: string) => {
-    navigate(`/orders/${orderId}`);
-  };
 
   const handleUpdateOrder = async (orderId: string) => {
     try {
@@ -85,9 +81,9 @@ const OrderManagement = () => {
               <OrdersCell>{order.name}</OrdersCell>
               <OrdersCell>{order.status}</OrdersCell>
               <OrdersCell>
-                <ActionButton onClick={() => handleViewOrder(order._id)}>
-                  View
-                </ActionButton>
+                <Link to={`/admin/order/${order._id}/detail`}>
+                  <IconButton color="default">View</IconButton>
+                </Link>
                 <ActionButton onClick={() => handleUpdateOrder(order._id)}>
                   Update
                 </ActionButton>

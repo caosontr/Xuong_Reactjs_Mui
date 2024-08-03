@@ -109,7 +109,7 @@ const Cart = () => {
             </Cell>
             <Cell>{item.product.title}</Cell>
             <QuantityCell>{item.quantity}</QuantityCell>
-            <Cell>£{item.product.price.toFixed(2)}</Cell>
+            <Cell>{item.product.price.toFixed(2)} VNĐ</Cell>
             <Cell>{(item.product.price * item.quantity).toFixed(2)} VNĐ</Cell>
             <Cell>
               <DeleteForeverIcon
